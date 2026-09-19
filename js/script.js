@@ -4,6 +4,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  initThemeToggle();
   initParticleBackground();
   initNavbar();
   initTypingEffect();
@@ -16,7 +17,41 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ==========================================================================
-   1. Dynamic Background Particle Mesh
+   1. Theme Toggle (Light / Dark Mode)
+   ========================================================================== */
+function initThemeToggle() {
+  const toggleBtn = document.getElementById('theme-toggle');
+  if (!toggleBtn) return;
+
+  const currentTheme = localStorage.getItem('portfolio-theme') || 'light';
+  document.documentElement.setAttribute('data-theme', currentTheme);
+  updateToggleIcon(currentTheme);
+
+  toggleBtn.addEventListener('click', () => {
+    const activeTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = activeTheme === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('portfolio-theme', newTheme);
+    updateToggleIcon(newTheme);
+  });
+
+  function updateToggleIcon(theme) {
+    const sunIcon = toggleBtn.querySelector('.icon-sun');
+    const moonIcon = toggleBtn.querySelector('.icon-moon');
+    if (sunIcon && moonIcon) {
+      if (theme === 'dark') {
+        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none';
+      } else {
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   2. Dynamic Background Particle Mesh
    ========================================================================== */
 function initParticleBackground() {
   const canvas = document.getElementById('bg-canvas');
@@ -27,16 +62,15 @@ function initParticleBackground() {
   let height = (canvas.height = window.innerHeight);
 
   const particles = [];
-  const particleCount = Math.min(Math.floor((width * height) / 18000), 55);
+  const particleCount = Math.min(Math.floor((width * height) / 20000), 45);
 
   class Particle {
     constructor() {
       this.x = Math.random() * width;
       this.y = Math.random() * height;
-      this.vx = (Math.random() - 0.5) * 0.6;
-      this.vy = (Math.random() - 0.5) * 0.6;
-      this.radius = Math.random() * 1.6 + 0.8;
-      this.color = Math.random() > 0.4 ? 'rgba(99, 102, 241,' : 'rgba(6, 182, 212,';
+      this.vx = (Math.random() - 0.5) * 0.5;
+      this.vy = (Math.random() - 0.5) * 0.5;
+      this.radius = Math.random() * 1.5 + 0.8;
     }
 
     update() {
@@ -47,10 +81,10 @@ function initParticleBackground() {
       if (this.y < 0 || this.y > height) this.vy *= -1;
     }
 
-    draw() {
+    draw(isDark) {
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-      ctx.fillStyle = this.color + '0.7)';
+      ctx.fillStyle = isDark ? 'rgba(129, 140, 248, 0.6)' : 'rgba(79, 70, 229, 0.45)';
       ctx.fill();
     }
   }
@@ -61,6 +95,7 @@ function initParticleBackground() {
 
   function animate() {
     ctx.clearRect(0, 0, width, height);
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
 
     // Draw connection lines
     for (let i = 0; i < particles.length; i++) {
@@ -69,12 +104,12 @@ function initParticleBackground() {
         const dy = particles[i].y - particles[j].y;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
-        if (dist < 130) {
-          const alpha = (1 - dist / 130) * 0.18;
+        if (dist < 120) {
+          const alpha = (1 - dist / 120) * (isDark ? 0.15 : 0.08);
           ctx.beginPath();
           ctx.moveTo(particles[i].x, particles[i].y);
           ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(139, 92, 246, ${alpha})`;
+          ctx.strokeStyle = isDark ? `rgba(165, 180, 252, ${alpha})` : `rgba(99, 102, 241, ${alpha})`;
           ctx.lineWidth = 0.75;
           ctx.stroke();
         }
@@ -84,7 +119,7 @@ function initParticleBackground() {
     // Update & draw particles
     particles.forEach((p) => {
       p.update();
-      p.draw();
+      p.draw(isDark);
     });
 
     requestAnimationFrame(animate);
@@ -99,7 +134,7 @@ function initParticleBackground() {
 }
 
 /* ==========================================================================
-   2. Navbar Scroll Spy & Mobile Toggle
+   3. Navbar Scroll Spy & Mobile Toggle
    ========================================================================== */
 function initNavbar() {
   const navbar = document.querySelector('.navbar');
@@ -108,15 +143,13 @@ function initNavbar() {
   const links = document.querySelectorAll('.nav-item');
   const sections = document.querySelectorAll('section[id]');
 
-  // Scroll effect
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 40) {
+    if (window.scrollY > 30) {
       navbar.classList.add('scrolled');
     } else {
       navbar.classList.remove('scrolled');
     }
 
-    // Active link highlighting
     let current = '';
     sections.forEach((section) => {
       const sectionTop = section.offsetTop - 120;
@@ -134,7 +167,6 @@ function initNavbar() {
     });
   });
 
-  // Mobile menu toggle
   if (mobileToggle && navLinks) {
     mobileToggle.addEventListener('click', () => {
       navLinks.classList.toggle('open');
@@ -142,7 +174,6 @@ function initNavbar() {
       mobileToggle.setAttribute('aria-expanded', isOpen);
     });
 
-    // Close mobile menu on navigation link click
     links.forEach((link) => {
       link.addEventListener('click', () => {
         navLinks.classList.remove('open');
@@ -152,24 +183,24 @@ function initNavbar() {
 }
 
 /* ==========================================================================
-   3. Hero Dynamic Typing Effect
+   4. Hero Dynamic Typing Effect
    ========================================================================== */
 function initTypingEffect() {
   const typingElement = document.querySelector('.hero-typing');
   if (!typingElement) return;
 
   const titles = [
-    'Backend Engineer',
+    'Senior Java Developer',
     'Spring Boot Specialist',
     'Microservices Architect',
-    'Distributed Systems Dev',
-    'REST & GraphQL API Designer'
+    'Distributed Systems Engineer',
+    'REST & Cloud API Builder'
   ];
 
   let titleIndex = 0;
   let charIndex = 0;
   let isDeleting = false;
-  let typeSpeed = 100;
+  let typeSpeed = 90;
 
   function type() {
     const currentTitle = titles[titleIndex];
@@ -177,20 +208,20 @@ function initTypingEffect() {
     if (isDeleting) {
       typingElement.textContent = currentTitle.substring(0, charIndex - 1);
       charIndex--;
-      typeSpeed = 45;
+      typeSpeed = 40;
     } else {
       typingElement.textContent = currentTitle.substring(0, charIndex + 1);
       charIndex++;
-      typeSpeed = 90;
+      typeSpeed = 80;
     }
 
     if (!isDeleting && charIndex === currentTitle.length) {
-      typeSpeed = 1800; // Pause at full word
+      typeSpeed = 1800;
       isDeleting = true;
     } else if (isDeleting && charIndex === 0) {
       isDeleting = false;
       titleIndex = (titleIndex + 1) % titles.length;
-      typeSpeed = 400;
+      typeSpeed = 350;
     }
 
     setTimeout(type, typeSpeed);
@@ -200,7 +231,7 @@ function initTypingEffect() {
 }
 
 /* ==========================================================================
-   4. Scroll Reveal Animations
+   5. Scroll Reveal Animations
    ========================================================================== */
 function initScrollReveal() {
   const reveals = document.querySelectorAll('.reveal');
@@ -219,8 +250,8 @@ function initScrollReveal() {
       });
     },
     {
-      threshold: 0.12,
-      rootMargin: '0px 0px -40px 0px'
+      threshold: 0.1,
+      rootMargin: '0px 0px -30px 0px'
     }
   );
 
@@ -228,7 +259,7 @@ function initScrollReveal() {
 }
 
 /* ==========================================================================
-   5. Interactive Skill Tabs Filtering
+   6. Interactive Skill Tabs Filtering
    ========================================================================== */
 function initSkillTabs() {
   const tabs = document.querySelectorAll('.skills-tabs .tab-btn');
@@ -250,7 +281,7 @@ function initSkillTabs() {
           }, 10);
         } else {
           card.style.opacity = '0';
-          card.style.transform = 'translateY(10px)';
+          card.style.transform = 'translateY(8px)';
           setTimeout(() => {
             card.style.display = 'none';
           }, 200);
@@ -261,7 +292,7 @@ function initSkillTabs() {
 }
 
 /* ==========================================================================
-   6. Project Category Filters
+   7. Project Category Filters
    ========================================================================== */
 function initProjectFilters() {
   const filterBtns = document.querySelectorAll('.project-filters .filter-btn');
@@ -281,10 +312,10 @@ function initProjectFilters() {
           setTimeout(() => {
             card.style.opacity = '1';
             card.style.transform = 'translateY(0)';
-          }, 20);
+          }, 15);
         } else {
           card.style.opacity = '0';
-          card.style.transform = 'translateY(15px)';
+          card.style.transform = 'translateY(12px)';
           setTimeout(() => {
             card.style.display = 'none';
           }, 200);
@@ -295,7 +326,7 @@ function initProjectFilters() {
 }
 
 /* ==========================================================================
-   7. Interactive Project Architecture Modal
+   8. Interactive Project Architecture Modal
    ========================================================================== */
 function initProjectModal() {
   const modal = document.getElementById('project-modal');
@@ -375,7 +406,7 @@ function initProjectModal() {
 }
 
 /* ==========================================================================
-   8. Contact Form Client-Side Handling
+   9. Contact Form Client-Side Handling
    ========================================================================== */
 function initContactForm() {
   const form = document.getElementById('portfolio-contact-form');
@@ -388,7 +419,6 @@ function initContactForm() {
 
     const name = form.querySelector('#sender-name').value.trim();
     const email = form.querySelector('#sender-email').value.trim();
-    const subject = form.querySelector('#sender-subject').value.trim();
     const message = form.querySelector('#sender-message').value.trim();
     const submitBtn = form.querySelector('button[type="submit"]');
 
@@ -405,7 +435,6 @@ function initContactForm() {
       return;
     }
 
-    // Submit state animation
     const originalText = submitBtn.innerHTML;
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<span>Sending Message...</span>';
@@ -421,12 +450,12 @@ function initContactForm() {
         statusBox.style.display = 'none';
         statusBox.className = 'form-status';
       }, 6000);
-    }, 1000);
+    }, 900);
   });
 }
 
 /* ==========================================================================
-   9. Back to Top Button
+   10. Back to Top Button
    ========================================================================== */
 function initBackToTop() {
   const backBtn = document.getElementById('back-to-top');

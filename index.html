@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,10 +13,10 @@
 </head>
 <body>
 
-  <!-- Dynamic Background Canvas & Ambient Mesh -->
+  <!-- Dynamic Background Canvas & Ambient Depth -->
   <canvas id="bg-canvas"></canvas>
-  <div class="ambient-glow" style="top: 15%; left: -10%;"></div>
-  <div class="ambient-glow" style="bottom: 20%; right: -10%; background: radial-gradient(circle, rgba(6, 182, 212, 0.1) 0%, rgba(0,0,0,0) 70%);"></div>
+  <div class="ambient-glow" style="top: 10%; left: -8%;"></div>
+  <div class="ambient-glow" style="bottom: 15%; right: -8%;"></div>
 
   <!-- ==========================================================================
        Navigation Bar
@@ -29,24 +29,45 @@
           <span>Java<span class="gradient-text">Craft</span></span>
         </a>
 
-        <button class="mobile-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-          </svg>
-        </button>
-
         <ul class="nav-links">
           <li><a href="#about" class="nav-item">About</a></li>
           <li><a href="#skills" class="nav-item">Skills</a></li>
           <li><a href="#projects" class="nav-item">Projects</a></li>
           <li><a href="#architecture" class="nav-item">Architecture</a></li>
           <li><a href="#contact" class="nav-item">Contact</a></li>
-          <li class="nav-cta">
-            <a href="#contact" class="btn btn-primary btn-sm">Hire Me</a>
-          </li>
         </ul>
+
+        <div class="nav-actions">
+          <!-- Theme Switcher Button -->
+          <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Color Theme" title="Toggle Light/Dark Theme">
+            <!-- Sun Icon (shown in dark mode) -->
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <!-- Moon Icon (shown in light mode) -->
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+
+          <a href="#contact" class="btn btn-primary btn-sm">Hire Me</a>
+
+          <button class="mobile-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+        </div>
       </div>
     </nav>
   </header>
@@ -71,7 +92,7 @@
 
             <div class="hero-role">
               <span>Specializing as </span>
-              <span class="hero-typing">Java Developer</span>
+              <span class="hero-typing">Senior Java Developer</span>
             </div>
 
             <p class="hero-description">
@@ -202,7 +223,7 @@
               <div class="highlight-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                  <line x1="8" y1="21" x2="16" y2="21"></line>
+                  <line x1="8" y1="16" x2="16" y2="16"></line>
                   <line x1="12" y1="17" x2="12" y2="21"></line>
                 </svg>
               </div>
@@ -355,7 +376,7 @@
             </div>
           </div>
 
-          <!-- MongoDB & NoSQL -->
+          <!-- MongoDB & Redis -->
           <div class="skill-card reveal" data-category="database">
             <div class="skill-card-header">
               <div class="skill-icon-wrap">
@@ -642,7 +663,7 @@
           <div class="arch-showcase-grid">
             <div class="arch-spec-left">
               <span class="section-badge">System Design Standards</span>
-              <h3 style="font-size: 1.8rem; margin-bottom: 1.25rem;">Building for <span class="gradient-text">Enterprise Scale</span></h3>
+              <h3 style="font-size: 1.85rem; margin-bottom: 1.25rem;">Building for <span class="gradient-text">Enterprise Scale</span></h3>
               
               <div class="arch-spec-item">
                 <div class="arch-spec-icon">
@@ -862,7 +883,7 @@
         <div id="modal-tech" class="project-tags"></div>
       </div>
 
-      <div style="background: rgba(255,255,255,0.03); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+      <div style="background: var(--bg-tertiary); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
         <h4 style="font-size: 0.85rem; text-transform: uppercase; color: var(--accent-emerald); margin-bottom: 0.35rem;">Benchmark & Scalability SLA</h4>
         <p id="modal-metrics" style="font-size: 0.85rem; color: var(--text-primary); font-family: var(--font-mono);"></p>
       </div>
