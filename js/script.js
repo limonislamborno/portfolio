@@ -1,6 +1,6 @@
 /**
- * Java Developer Portfolio - Interactive Engine
- * Vanilla JavaScript (ES6+) - Zero External Dependencies
+ * Java Developer Portfolio - Md. Limon Islam
+ * Interactive Engine - Pure Vanilla JavaScript (ES6+)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -97,7 +97,6 @@ function initParticleBackground() {
     ctx.clearRect(0, 0, width, height);
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
 
-    // Draw connection lines
     for (let i = 0; i < particles.length; i++) {
       for (let j = i + 1; j < particles.length; j++) {
         const dx = particles[i].x - particles[j].x;
@@ -116,7 +115,6 @@ function initParticleBackground() {
       }
     }
 
-    // Update & draw particles
     particles.forEach((p) => {
       p.update();
       p.draw(isDark);
@@ -190,11 +188,11 @@ function initTypingEffect() {
   if (!typingElement) return;
 
   const titles = [
-    'Senior Java Developer',
+    'Java Developer',
     'Spring Boot Specialist',
-    'Microservices Architect',
-    'Distributed Systems Engineer',
-    'REST & Cloud API Builder'
+    'REST API Developer',
+    'Microservices & SQL Tuner',
+    'Financial App Engineer'
   ];
 
   let titleIndex = 0;
@@ -336,33 +334,38 @@ function initProjectModal() {
   const modalDesc = document.getElementById('modal-desc');
   const modalTech = document.getElementById('modal-tech');
   const modalMetrics = document.getElementById('modal-metrics');
+  const modalLink = document.getElementById('modal-repo-link');
 
   if (!modal || !closeBtn) return;
 
   const projectData = {
-    'fintech-microservices': {
-      title: 'High-Throughput Fintech Payment Gateway',
-      desc: 'An enterprise microservices platform handling asynchronous transaction processing, idempotent payment execution, distributed tracing via Spring Cloud Sleuth & Zipkin, and resilience mechanisms using Resilience4j circuit breakers.',
-      tech: ['Java 17', 'Spring Boot 3', 'Kafka', 'Redis Cluster', 'PostgreSQL', 'Docker', 'Kubernetes'],
-      metrics: 'Processes 8,500+ TPS with sub-25ms P99 latency and 99.99% availability.'
+    'biznest': {
+      title: 'BizNest Enterprise Management Platform',
+      desc: 'An enterprise-grade business management and financial application built with Java, Spring Boot, Angular, and Oracle Database. Features complex SQL optimization, stored procedures, Hibernate persistence, Jasper Reports, and secure RESTful APIs.',
+      tech: ['Java', 'Spring Boot', 'Angular', 'Tomcat', 'Hibernate', 'Oracle Database', 'jQuery', 'Bootstrap'],
+      metrics: 'Achieved ~15% system performance boost via stored procedure tuning and SQL query indexing.',
+      url: 'https://github.com/limonislamborno/BizNest'
     },
-    'ecommerce-backend': {
-      title: 'Distributed Multi-Tenant E-Commerce Platform',
-      desc: 'Event-driven backend service architecture featuring dynamic tenant schema isolation with Spring Data JPA, Redis caching layer with cache-aside pattern, and Elasticsearch product discovery.',
-      tech: ['Java 21', 'Spring Boot', 'Spring Security (JWT/OAuth2)', 'Elasticsearch', 'RabbitMQ', 'MySQL'],
-      metrics: 'Scaled to 250,000+ daily active users with 40% reduction in database load.'
+    'banking-system': {
+      title: 'Banking Management System (Full-Stack)',
+      desc: 'Secure enterprise banking portal engineered with Spring Boot REST APIs and an Angular client. Manages customer account opening, transaction audit logging, deposit schemes, and role-based administrative control with MySQL persistence.',
+      tech: ['Java', 'Spring Boot', 'Angular', 'Hibernate', 'MySQL', 'REST APIs', 'Bootstrap'],
+      metrics: 'Enforces ACID financial transaction boundaries with zero ledger discrepancies.',
+      url: 'https://github.com/limonislamborno/Angular-With-Spring-Boot-Project'
     },
-    'iot-telemetry': {
-      title: 'Real-Time IoT Telemetry Ingestion Hub',
-      desc: 'Reactive streaming ingestion engine utilizing Spring WebFlux and Apache Kafka to ingest, aggregate, and persist millions of sensor event data packets per minute into time-series storage.',
-      tech: ['Java 17', 'Spring WebFlux', 'Apache Kafka', 'MongoDB Time Series', 'Docker', 'Prometheus/Grafana'],
-      metrics: 'Ingests over 12M telemetry events daily with zero data loss.'
+    'isdb-management': {
+      title: 'IsDB Management Desktop System',
+      desc: 'High-performance Java desktop solution utilizing Java Swing and JDBC for direct MySQL database connectivity. Provides fast data manipulation, institutional reporting, and efficient resource utilization.',
+      tech: ['Java Swing', 'JDBC', 'MySQL', 'OOP Design Patterns'],
+      metrics: 'Lightweight desktop client with zero network lag on local institutional networks.',
+      url: 'https://github.com/limonislamborno/Swing-Project-With-Mysql'
     },
-    'cloud-devops': {
-      title: 'Automated CI/CD & Service Discovery Platform',
-      desc: 'Production-ready cloud orchestration pipeline featuring automated Maven builds, Docker multi-stage image packaging, SonarQube static code quality gates, and Eureka service mesh registry.',
-      tech: ['Spring Cloud Netflix Eureka', 'Docker', 'Maven', 'GitHub Actions', 'AWS ECS', 'SonarQube'],
-      metrics: 'Reduced release cycle time from days to 12 minutes with automated zero-downtime rollouts.'
+    'banking-flutter': {
+      title: 'Banking Management Mobile Client App',
+      desc: 'Cross-platform mobile banking interface engineered with Flutter and Dart. Integrates Firebase Authentication for secure multi-factor login and synchronizes account ledger records with a centralized MySQL backend.',
+      tech: ['Flutter', 'Dart', 'Firebase Auth', 'MySQL', 'REST Endpoints'],
+      metrics: 'Instant authentication response and smooth 60fps mobile user experience.',
+      url: 'https://github.com/limonislamborno/Flutter-Project'
     }
   };
 
@@ -376,6 +379,10 @@ function initProjectModal() {
         modalTitle.textContent = data.title;
         modalDesc.textContent = data.desc;
         modalMetrics.textContent = data.metrics;
+
+        if (modalLink) {
+          modalLink.href = data.url;
+        }
 
         modalTech.innerHTML = '';
         data.tech.forEach((t) => {
@@ -441,7 +448,7 @@ function initContactForm() {
 
     setTimeout(() => {
       statusBox.className = 'form-status success';
-      statusBox.textContent = `Thank you, ${name}! Your message has been sent successfully. I will get back to you shortly.`;
+      statusBox.textContent = `Thank you, ${name}! Your message has been received. I will get back to you at ${email} shortly.`;
       form.reset();
       submitBtn.disabled = false;
       submitBtn.innerHTML = originalText;
@@ -450,7 +457,7 @@ function initContactForm() {
         statusBox.style.display = 'none';
         statusBox.className = 'form-status';
       }, 6000);
-    }, 900);
+    }, 800);
   });
 }
 
