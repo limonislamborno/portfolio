@@ -592,16 +592,34 @@ function initContactForm() {
       .then((res) => {
         if (res.ok) {
           statusBox.className = 'form-status success';
-          statusBox.textContent = `Thank you, ${name}! Your message has been sent successfully. I will get back to you at ${email} shortly.`;
+          statusBox.innerHTML = `
+            <div class="status-success-content">
+              <div class="status-icon-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+              <div>
+                <h4 class="status-title">Message Sent Successfully!</h4>
+                <p class="status-desc">Thank you, <strong>${name}</strong>! Your email has been received. I will reply to <strong>${email}</strong> within 24 hours.</p>
+              </div>
+            </div>
+          `;
           form.reset();
         } else {
           statusBox.className = 'form-status error';
-          statusBox.textContent = 'Submission error. Please email directly at limonislamborno@gmail.com.';
+          statusBox.innerHTML = `
+            <div class="status-title" style="color: #dc2626;">Submission Error</div>
+            <p class="status-desc">Please email me directly at <a href="mailto:limonislamborno@gmail.com" style="text-decoration:underline;">limonislamborno@gmail.com</a>.</p>
+          `;
         }
       })
       .catch(() => {
         statusBox.className = 'form-status error';
-        statusBox.textContent = 'Network error. Please email directly at limonislamborno@gmail.com.';
+        statusBox.innerHTML = `
+          <div class="status-title" style="color: #dc2626;">Network Error</div>
+          <p class="status-desc">Please email me directly at <a href="mailto:limonislamborno@gmail.com" style="text-decoration:underline;">limonislamborno@gmail.com</a>.</p>
+        `;
       })
       .finally(() => {
         submitBtn.disabled = false;
@@ -609,7 +627,7 @@ function initContactForm() {
         setTimeout(() => {
           statusBox.style.display = 'none';
           statusBox.className = 'form-status';
-        }, 6000);
+        }, 8000);
       });
   });
 }
