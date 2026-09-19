@@ -62,15 +62,15 @@ function initParticleBackground() {
   let height = (canvas.height = window.innerHeight);
 
   const particles = [];
-  const particleCount = Math.min(Math.floor((width * height) / 20000), 45);
+  const particleCount = Math.min(Math.floor((width * height) / 22000), 40);
 
   class Particle {
     constructor() {
       this.x = Math.random() * width;
       this.y = Math.random() * height;
-      this.vx = (Math.random() - 0.5) * 0.5;
-      this.vy = (Math.random() - 0.5) * 0.5;
-      this.radius = Math.random() * 1.5 + 0.8;
+      this.vx = (Math.random() - 0.5) * 0.45;
+      this.vy = (Math.random() - 0.5) * 0.45;
+      this.radius = Math.random() * 1.4 + 0.8;
     }
 
     update() {
@@ -84,7 +84,7 @@ function initParticleBackground() {
     draw(isDark) {
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-      ctx.fillStyle = isDark ? 'rgba(129, 140, 248, 0.6)' : 'rgba(79, 70, 229, 0.45)';
+      ctx.fillStyle = isDark ? 'rgba(129, 140, 248, 0.55)' : 'rgba(79, 70, 229, 0.4)';
       ctx.fill();
     }
   }
@@ -103,13 +103,13 @@ function initParticleBackground() {
         const dy = particles[i].y - particles[j].y;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
-        if (dist < 120) {
-          const alpha = (1 - dist / 120) * (isDark ? 0.15 : 0.08);
+        if (dist < 110) {
+          const alpha = (1 - dist / 110) * (isDark ? 0.14 : 0.07);
           ctx.beginPath();
           ctx.moveTo(particles[i].x, particles[i].y);
           ctx.lineTo(particles[j].x, particles[j].y);
           ctx.strokeStyle = isDark ? `rgba(165, 180, 252, ${alpha})` : `rgba(99, 102, 241, ${alpha})`;
-          ctx.lineWidth = 0.75;
+          ctx.lineWidth = 0.7;
           ctx.stroke();
         }
       }
@@ -142,7 +142,7 @@ function initNavbar() {
   const sections = document.querySelectorAll('section[id]');
 
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 30) {
+    if (window.scrollY > 25) {
       navbar.classList.add('scrolled');
     } else {
       navbar.classList.remove('scrolled');
@@ -150,7 +150,7 @@ function initNavbar() {
 
     let current = '';
     sections.forEach((section) => {
-      const sectionTop = section.offsetTop - 120;
+      const sectionTop = section.offsetTop - 100;
       const sectionHeight = section.offsetHeight;
       if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
         current = section.getAttribute('id');
@@ -190,9 +190,9 @@ function initTypingEffect() {
   const titles = [
     'Java Developer',
     'Spring Boot Specialist',
-    'REST API Developer',
-    'Microservices & SQL Tuner',
-    'Financial App Engineer'
+    'Microservices & Docker Engineer',
+    'SQL Optimization Expert',
+    'REST API Architect'
   ];
 
   let titleIndex = 0;
@@ -206,20 +206,20 @@ function initTypingEffect() {
     if (isDeleting) {
       typingElement.textContent = currentTitle.substring(0, charIndex - 1);
       charIndex--;
-      typeSpeed = 40;
+      typeSpeed = 35;
     } else {
       typingElement.textContent = currentTitle.substring(0, charIndex + 1);
       charIndex++;
-      typeSpeed = 80;
+      typeSpeed = 75;
     }
 
     if (!isDeleting && charIndex === currentTitle.length) {
-      typeSpeed = 1800;
+      typeSpeed = 1600;
       isDeleting = true;
     } else if (isDeleting && charIndex === 0) {
       isDeleting = false;
       titleIndex = (titleIndex + 1) % titles.length;
-      typeSpeed = 350;
+      typeSpeed = 300;
     }
 
     setTimeout(type, typeSpeed);
@@ -248,8 +248,8 @@ function initScrollReveal() {
       });
     },
     {
-      threshold: 0.1,
-      rootMargin: '0px 0px -30px 0px'
+      threshold: 0.08,
+      rootMargin: '0px 0px -20px 0px'
     }
   );
 
@@ -271,7 +271,8 @@ function initSkillTabs() {
       const filter = tab.dataset.filter;
 
       cards.forEach((card) => {
-        if (filter === 'all' || card.dataset.category === filter) {
+        const cats = card.dataset.category ? card.dataset.category.split(' ') : [];
+        if (filter === 'all' || cats.includes(filter)) {
           card.style.display = 'block';
           setTimeout(() => {
             card.style.opacity = '1';
@@ -279,10 +280,10 @@ function initSkillTabs() {
           }, 10);
         } else {
           card.style.opacity = '0';
-          card.style.transform = 'translateY(8px)';
+          card.style.transform = 'translateY(6px)';
           setTimeout(() => {
             card.style.display = 'none';
-          }, 200);
+          }, 180);
         }
       });
     });
@@ -313,10 +314,10 @@ function initProjectFilters() {
           }, 15);
         } else {
           card.style.opacity = '0';
-          card.style.transform = 'translateY(12px)';
+          card.style.transform = 'translateY(10px)';
           setTimeout(() => {
             card.style.display = 'none';
-          }, 200);
+          }, 180);
         }
       });
     });
@@ -339,6 +340,13 @@ function initProjectModal() {
   if (!modal || !closeBtn) return;
 
   const projectData = {
+    'microservices-pipeline': {
+      title: 'Dockerized Microservices & Event Pipeline',
+      desc: 'Distributed event-driven architecture featuring containerized Spring Boot microservices, Spring Cloud API Gateway, Apache Kafka event streaming, and PostgreSQL persistence. Orchestrated using Docker Compose with health checks and Eureka service discovery.',
+      tech: ['Java 17', 'Spring Boot 3', 'Spring Cloud Gateway', 'Apache Kafka', 'Docker & Compose', 'PostgreSQL', 'Eureka'],
+      metrics: 'Containerized deployment with sub-30ms inter-service latency and zero lost events under load.',
+      url: 'https://github.com/limonislamborno'
+    },
     'biznest': {
       title: 'BizNest Enterprise Management Platform',
       desc: 'An enterprise-grade business management and financial application built with Java, Spring Boot, Angular, and Oracle Database. Features complex SQL optimization, stored procedures, Hibernate persistence, Jasper Reports, and secure RESTful APIs.',
@@ -347,10 +355,10 @@ function initProjectModal() {
       url: 'https://github.com/limonislamborno/BizNest'
     },
     'banking-system': {
-      title: 'Banking Management System (Full-Stack)',
-      desc: 'Secure enterprise banking portal engineered with Spring Boot REST APIs and an Angular client. Manages customer account opening, transaction audit logging, deposit schemes, and role-based administrative control with MySQL persistence.',
-      tech: ['Java', 'Spring Boot', 'Angular', 'Hibernate', 'MySQL', 'REST APIs', 'Bootstrap'],
-      metrics: 'Enforces ACID financial transaction boundaries with zero ledger discrepancies.',
+      title: 'Dockerized Banking Management System',
+      desc: 'Secure enterprise banking portal engineered with Spring Boot REST APIs and an Angular client, fully containerized with Docker. Manages customer account opening, transaction audit logging, deposit schemes, and role-based administrative control with MySQL persistence.',
+      tech: ['Java', 'Spring Boot', 'Angular', 'Hibernate', 'MySQL', 'Docker Compose', 'REST APIs', 'Bootstrap'],
+      metrics: 'Enforces ACID financial transaction boundaries with automated container health validation.',
       url: 'https://github.com/limonislamborno/Angular-With-Spring-Boot-Project'
     },
     'isdb-management': {
@@ -456,8 +464,8 @@ function initContactForm() {
       setTimeout(() => {
         statusBox.style.display = 'none';
         statusBox.className = 'form-status';
-      }, 6000);
-    }, 800);
+      }, 5000);
+    }, 700);
   });
 }
 
