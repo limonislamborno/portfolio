@@ -53,10 +53,20 @@ function initParticleBackground() {
   let width = (canvas.width = window.innerWidth);
   let height = (canvas.height = window.innerHeight);
 
-  const particles = [];
-  const particleCount = Math.min(Math.floor((width * height) / 20000), 45);
+  const colors = [
+    { light: '79, 70, 229', dark: '129, 140, 248' },
+    { light: '124, 58, 237', dark: '167, 139, 250' },
+    { light: '2, 132, 199', dark: '56, 189, 248' },
+    { light: '5, 150, 105', dark: '52, 211, 153' },
+    { light: '225, 29, 72', dark: '251, 113, 133' },
+    { light: '217, 119, 6', dark: '251, 191, 36' },
+    { light: '192, 38, 211', dark: '232, 121, 249' }
+  ];
 
-  const mouse = { x: null, y: null, radius: 140 };
+  const particles = [];
+  const particleCount = Math.min(Math.floor((width * height) / 16000), 60);
+
+  const mouse = { x: null, y: null, radius: 150 };
 
   window.addEventListener('mousemove', (e) => {
     mouse.x = e.clientX;
@@ -72,17 +82,20 @@ function initParticleBackground() {
     constructor() {
       this.x = Math.random() * width;
       this.y = Math.random() * height;
-      this.baseX = this.x;
-      this.baseY = this.y;
-      this.vx = (Math.random() - 0.5) * 0.5;
-      this.vy = (Math.random() - 0.5) * 0.5;
-      this.radius = Math.random() * 1.6 + 0.8;
-      this.density = Math.random() * 20 + 1;
+      this.vx = (Math.random() - 0.5) * 0.7;
+      this.vy = (Math.random() - 0.5) * 0.7;
+      this.baseRadius = Math.random() * 2 + 1.2;
+      this.radius = this.baseRadius;
+      this.color = colors[Math.floor(Math.random() * colors.length)];
+      this.pulseSpeed = Math.random() * 0.03 + 0.01;
+      this.pulseAngle = Math.random() * Math.PI * 2;
     }
 
     update() {
       this.x += this.vx;
       this.y += this.vy;
+      this.pulseAngle += this.pulseSpeed;
+      this.radius = this.baseRadius + Math.sin(this.pulseAngle) * 0.6;
 
       if (this.x < 0 || this.x > width) this.vx *= -1;
       if (this.y < 0 || this.y > height) this.vy *= -1;
@@ -93,8 +106,8 @@ function initParticleBackground() {
         const distance = Math.sqrt(dx * dx + dy * dy);
         if (distance < mouse.radius) {
           const force = (mouse.radius - distance) / mouse.radius;
-          const directionX = (dx / distance) * force * 3;
-          const directionY = (dy / distance) * force * 3;
+          const directionX = (dx / distance) * force * 3.5;
+          const directionY = (dy / distance) * force * 3.5;
           this.x -= directionX;
           this.y -= directionY;
         }
@@ -102,10 +115,14 @@ function initParticleBackground() {
     }
 
     draw(isDark) {
+      const rgb = isDark ? this.color.dark : this.color.light;
       ctx.beginPath();
-      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-      ctx.fillStyle = isDark ? 'rgba(129, 140, 248, 0.65)' : 'rgba(79, 70, 229, 0.45)';
+      ctx.arc(this.x, this.y, Math.max(0.5, this.radius), 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${rgb}, ${isDark ? 0.8 : 0.65})`;
+      ctx.shadowBlur = 8;
+      ctx.shadowColor = `rgba(${rgb}, ${isDark ? 0.6 : 0.4})`;
       ctx.fill();
+      ctx.shadowBlur = 0;
     }
   }
 
@@ -123,13 +140,20 @@ function initParticleBackground() {
         const dy = particles[i].y - particles[j].y;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
-        if (dist < 120) {
-          const alpha = (1 - dist / 120) * (isDark ? 0.16 : 0.08);
+        if (dist < 130) {
+          const alpha = (1 - dist / 130) * (isDark ? 0.28 : 0.16);
+          const rgb1 = isDark ? particles[i].color.dark : particles[i].color.light;
+          const rgb2 = isDark ? particles[j].color.dark : particles[j].color.light;
+
+          const gradient = ctx.createLinearGradient(particles[i].x, particles[i].y, particles[j].x, particles[j].y);
+          gradient.addColorStop(0, `rgba(${rgb1}, ${alpha})`);
+          gradient.addColorStop(1, `rgba(${rgb2}, ${alpha})`);
+
           ctx.beginPath();
           ctx.moveTo(particles[i].x, particles[i].y);
           ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = isDark ? `rgba(165, 180, 252, ${alpha})` : `rgba(99, 102, 241, ${alpha})`;
-          ctx.lineWidth = 0.8;
+          ctx.strokeStyle = gradient;
+          ctx.lineWidth = 1;
           ctx.stroke();
         }
       }
@@ -141,12 +165,13 @@ function initParticleBackground() {
         const dy = mouse.y - particles[i].y;
         const dist = Math.sqrt(dx * dx + dy * dy);
         if (dist < mouse.radius) {
-          const alpha = (1 - dist / mouse.radius) * (isDark ? 0.22 : 0.12);
+          const alpha = (1 - dist / mouse.radius) * (isDark ? 0.35 : 0.22);
+          const rgb = isDark ? particles[i].color.dark : particles[i].color.light;
           ctx.beginPath();
           ctx.moveTo(mouse.x, mouse.y);
           ctx.lineTo(particles[i].x, particles[i].y);
-          ctx.strokeStyle = isDark ? `rgba(99, 102, 241, ${alpha})` : `rgba(79, 70, 229, ${alpha})`;
-          ctx.lineWidth = 0.9;
+          ctx.strokeStyle = `rgba(${rgb}, ${alpha})`;
+          ctx.lineWidth = 1.2;
           ctx.stroke();
         }
       }
