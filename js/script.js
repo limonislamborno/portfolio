@@ -189,10 +189,11 @@ function initTypingEffect() {
 
   const titles = [
     'Java Developer',
+    'Flutter App Developer',
     'Spring Boot Specialist',
     'Microservices & Docker Engineer',
     'SQL Optimization Expert',
-    'REST API Architect'
+    'Full-Stack & Mobile Dev'
   ];
 
   let titleIndex = 0;
