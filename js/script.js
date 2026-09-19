@@ -471,6 +471,13 @@ function initProjectModal() {
   if (!modal || !closeBtn) return;
 
   const projectData = {
+    'mypoysha': {
+      title: 'MyPoysha - Mobile Financial Platform',
+      desc: 'An end-to-end personal finance and digital wallet application combining a cross-platform Flutter mobile client and an enterprise Java Spring Boot backend. Containerized via Docker and deployed on Render with Supabase cloud database persistence.',
+      tech: ['Flutter', 'Dart', 'Java', 'Spring Boot', 'Supabase', 'Docker', 'Render', 'REST APIs'],
+      metrics: 'Containerized cloud microservices with sub-50ms API response time and real-time ledger synchronization.',
+      url: 'https://github.com/limonislamborno/MyPoysha'
+    },
     'microservices-pipeline': {
       title: 'Dockerized Microservices & Event Pipeline',
       desc: 'Distributed event-driven architecture featuring containerized Spring Boot microservices, Spring Cloud API Gateway, Apache Kafka event streaming, and PostgreSQL persistence. Orchestrated using Docker Compose with health checks and Eureka service discovery.',
