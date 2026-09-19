@@ -1,8 +1,3 @@
-/**
- * Java Developer Portfolio - Md. Limon Islam
- * Interactive Engine - Pure Vanilla JavaScript (ES6+)
- */
-
 document.addEventListener('DOMContentLoaded', () => {
   initThemeToggle();
   initParticleBackground();
@@ -14,11 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
   initContactForm();
   initProjectModal();
   initBackToTop();
+  initCard3DTilt();
+  initStatCounters();
+  initSkillBarAnimation();
 });
 
-/* ==========================================================================
-   1. Theme Toggle (Light / Dark Mode)
-   ========================================================================== */
 function initThemeToggle() {
   const toggleBtn = document.getElementById('theme-toggle');
   if (!toggleBtn) return;
@@ -50,9 +45,6 @@ function initThemeToggle() {
   }
 }
 
-/* ==========================================================================
-   2. Dynamic Background Particle Mesh
-   ========================================================================== */
 function initParticleBackground() {
   const canvas = document.getElementById('bg-canvas');
   if (!canvas) return;
@@ -62,15 +54,30 @@ function initParticleBackground() {
   let height = (canvas.height = window.innerHeight);
 
   const particles = [];
-  const particleCount = Math.min(Math.floor((width * height) / 22000), 40);
+  const particleCount = Math.min(Math.floor((width * height) / 20000), 45);
+
+  const mouse = { x: null, y: null, radius: 140 };
+
+  window.addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+
+  window.addEventListener('mouseleave', () => {
+    mouse.x = null;
+    mouse.y = null;
+  });
 
   class Particle {
     constructor() {
       this.x = Math.random() * width;
       this.y = Math.random() * height;
-      this.vx = (Math.random() - 0.5) * 0.45;
-      this.vy = (Math.random() - 0.5) * 0.45;
-      this.radius = Math.random() * 1.4 + 0.8;
+      this.baseX = this.x;
+      this.baseY = this.y;
+      this.vx = (Math.random() - 0.5) * 0.5;
+      this.vy = (Math.random() - 0.5) * 0.5;
+      this.radius = Math.random() * 1.6 + 0.8;
+      this.density = Math.random() * 20 + 1;
     }
 
     update() {
@@ -79,12 +86,25 @@ function initParticleBackground() {
 
       if (this.x < 0 || this.x > width) this.vx *= -1;
       if (this.y < 0 || this.y > height) this.vy *= -1;
+
+      if (mouse.x !== null && mouse.y !== null) {
+        const dx = mouse.x - this.x;
+        const dy = mouse.y - this.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < mouse.radius) {
+          const force = (mouse.radius - distance) / mouse.radius;
+          const directionX = (dx / distance) * force * 3;
+          const directionY = (dy / distance) * force * 3;
+          this.x -= directionX;
+          this.y -= directionY;
+        }
+      }
     }
 
     draw(isDark) {
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-      ctx.fillStyle = isDark ? 'rgba(129, 140, 248, 0.55)' : 'rgba(79, 70, 229, 0.4)';
+      ctx.fillStyle = isDark ? 'rgba(129, 140, 248, 0.65)' : 'rgba(79, 70, 229, 0.45)';
       ctx.fill();
     }
   }
@@ -103,13 +123,30 @@ function initParticleBackground() {
         const dy = particles[i].y - particles[j].y;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
-        if (dist < 110) {
-          const alpha = (1 - dist / 110) * (isDark ? 0.14 : 0.07);
+        if (dist < 120) {
+          const alpha = (1 - dist / 120) * (isDark ? 0.16 : 0.08);
           ctx.beginPath();
           ctx.moveTo(particles[i].x, particles[i].y);
           ctx.lineTo(particles[j].x, particles[j].y);
           ctx.strokeStyle = isDark ? `rgba(165, 180, 252, ${alpha})` : `rgba(99, 102, 241, ${alpha})`;
-          ctx.lineWidth = 0.7;
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        }
+      }
+    }
+
+    if (mouse.x !== null && mouse.y !== null) {
+      for (let i = 0; i < particles.length; i++) {
+        const dx = mouse.x - particles[i].x;
+        const dy = mouse.y - particles[i].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < mouse.radius) {
+          const alpha = (1 - dist / mouse.radius) * (isDark ? 0.22 : 0.12);
+          ctx.beginPath();
+          ctx.moveTo(mouse.x, mouse.y);
+          ctx.lineTo(particles[i].x, particles[i].y);
+          ctx.strokeStyle = isDark ? `rgba(99, 102, 241, ${alpha})` : `rgba(79, 70, 229, ${alpha})`;
+          ctx.lineWidth = 0.9;
           ctx.stroke();
         }
       }
@@ -131,9 +168,6 @@ function initParticleBackground() {
   });
 }
 
-/* ==========================================================================
-   3. Navbar Scroll Spy & Mobile Toggle
-   ========================================================================== */
 function initNavbar() {
   const navbar = document.querySelector('.navbar');
   const navLinks = document.querySelector('.nav-links');
@@ -180,9 +214,6 @@ function initNavbar() {
   }
 }
 
-/* ==========================================================================
-   4. Hero Dynamic Typing Effect
-   ========================================================================== */
 function initTypingEffect() {
   const typingElement = document.querySelector('.hero-typing');
   if (!typingElement) return;
@@ -229,9 +260,6 @@ function initTypingEffect() {
   type();
 }
 
-/* ==========================================================================
-   5. Scroll Reveal Animations
-   ========================================================================== */
 function initScrollReveal() {
   const reveals = document.querySelectorAll('.reveal');
   if (!('IntersectionObserver' in window)) {
@@ -257,9 +285,6 @@ function initScrollReveal() {
   reveals.forEach((el) => observer.observe(el));
 }
 
-/* ==========================================================================
-   6. Interactive Skill Tabs Filtering
-   ========================================================================== */
 function initSkillTabs() {
   const tabs = document.querySelectorAll('.skills-tabs .tab-btn');
   const cards = document.querySelectorAll('.skill-card');
@@ -291,9 +316,6 @@ function initSkillTabs() {
   });
 }
 
-/* ==========================================================================
-   7. Project Category Filters
-   ========================================================================== */
 function initProjectFilters() {
   const filterBtns = document.querySelectorAll('.project-filters .filter-btn');
   const projectCards = document.querySelectorAll('.project-card');
@@ -325,9 +347,117 @@ function initProjectFilters() {
   });
 }
 
-/* ==========================================================================
-   8. Interactive Project Architecture Modal
-   ========================================================================== */
+function initCard3DTilt() {
+  const tiltElements = document.querySelectorAll('.project-card, .skill-card, .highlight-box, .hero-portrait-frame');
+
+  tiltElements.forEach((el) => {
+    el.addEventListener('mousemove', (e) => {
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      el.style.setProperty('--mouse-x', `${x}px`);
+      el.style.setProperty('--mouse-y', `${y}px`);
+
+      if (window.innerWidth > 992 && !el.classList.contains('no-tilt')) {
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * -5.5;
+        const rotateY = ((x - centerX) / centerX) * 5.5;
+
+        el.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-4px)`;
+      }
+    });
+
+    el.addEventListener('mouseleave', () => {
+      if (window.innerWidth > 992 && !el.classList.contains('no-tilt')) {
+        el.style.transform = '';
+      }
+    });
+  });
+}
+
+function initStatCounters() {
+  const highlightBoxes = document.querySelectorAll('.highlight-box');
+  if (!('IntersectionObserver' in window)) return;
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const numEl = entry.target.querySelector('.highlight-number');
+        if (numEl && !numEl.dataset.animated) {
+          numEl.dataset.animated = 'true';
+          animateValue(numEl);
+        }
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  highlightBoxes.forEach((box) => observer.observe(box));
+
+  function animateValue(el) {
+    const text = el.textContent.trim();
+    if (text.includes('2.5+')) {
+      let current = 0;
+      const timer = setInterval(() => {
+        current += 0.1;
+        if (current >= 2.5) {
+          el.textContent = '2.5+ Years';
+          clearInterval(timer);
+        } else {
+          el.textContent = current.toFixed(1) + '+ Years';
+        }
+      }, 40);
+    } else if (text.includes('15%')) {
+      let current = 0;
+      const timer = setInterval(() => {
+        current += 1;
+        if (current >= 15) {
+          el.textContent = '~15%';
+          clearInterval(timer);
+        } else {
+          el.textContent = '~' + current + '%';
+        }
+      }, 50);
+    } else if (text.includes('99.9%')) {
+      let current = 90.0;
+      const timer = setInterval(() => {
+        current += 0.5;
+        if (current >= 99.9) {
+          el.textContent = '99.9%';
+          clearInterval(timer);
+        } else {
+          el.textContent = current.toFixed(1) + '%';
+        }
+      }, 35);
+    }
+  }
+}
+
+function initSkillBarAnimation() {
+  const skillCards = document.querySelectorAll('.skill-card');
+  if (!('IntersectionObserver' in window)) return;
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const fill = entry.target.querySelector('.skill-progress-fill');
+        if (fill) {
+          const targetWidth = fill.style.width || fill.getAttribute('data-width') || '85%';
+          fill.style.width = '0%';
+          setTimeout(() => {
+            fill.style.width = targetWidth;
+          }, 80);
+        }
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  skillCards.forEach((card) => observer.observe(card));
+}
+
 function initProjectModal() {
   const modal = document.getElementById('project-modal');
   const closeBtn = document.getElementById('modal-close');
@@ -421,9 +551,6 @@ function initProjectModal() {
   });
 }
 
-/* ==========================================================================
-   9. Contact Form Client-Side Handling
-   ========================================================================== */
 function initContactForm() {
   const form = document.getElementById('portfolio-contact-form');
   const statusBox = document.getElementById('form-status-msg');
@@ -470,9 +597,6 @@ function initContactForm() {
   });
 }
 
-/* ==========================================================================
-   10. Back to Top Button
-   ========================================================================== */
 function initBackToTop() {
   const backBtn = document.getElementById('back-to-top');
   if (!backBtn) return;
