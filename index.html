@@ -1022,25 +1022,30 @@
           </div>
 
           <div class="contact-form-card reveal">
-            <form id="portfolio-contact-form" novalidate>
+            <form id="portfolio-contact-form" name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
+              <input type="hidden" name="form-name" value="contact">
+              <p style="display:none;">
+                <label>Don't fill this out: <input name="bot-field"></label>
+              </p>
+
               <div class="form-group">
                 <label for="sender-name" class="form-label">Full Name *</label>
-                <input type="text" id="sender-name" class="form-control" placeholder="e.g. Alex Morgan" required>
+                <input type="text" id="sender-name" name="name" class="form-control" placeholder="e.g. Alex Morgan" required>
               </div>
 
               <div class="form-group">
                 <label for="sender-email" class="form-label">Email Address *</label>
-                <input type="email" id="sender-email" class="form-control" placeholder="alex@company.com" required>
+                <input type="email" id="sender-email" name="email" class="form-control" placeholder="alex@company.com" required>
               </div>
 
               <div class="form-group">
                 <label for="sender-subject" class="form-label">Subject</label>
-                <input type="text" id="sender-subject" class="form-control" placeholder="Project Inquiry / Job Opportunity">
+                <input type="text" id="sender-subject" name="subject" class="form-control" placeholder="Project Inquiry / Job Opportunity">
               </div>
 
               <div class="form-group">
                 <label for="sender-message" class="form-label">Message *</label>
-                <textarea id="sender-message" class="form-control" placeholder="Tell me about your project, timeline, or engineering team..." required></textarea>
+                <textarea id="sender-message" name="message" class="form-control" placeholder="Tell me about your project, timeline, or engineering team..." required></textarea>
               </div>
 
               <button type="submit" class="btn btn-primary" style="width: 100%;">

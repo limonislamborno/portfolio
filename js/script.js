@@ -582,18 +582,35 @@ function initContactForm() {
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<span>Sending Message...</span>';
 
-    setTimeout(() => {
-      statusBox.className = 'form-status success';
-      statusBox.textContent = `Thank you, ${name}! Your message has been received. I will get back to you at ${email} shortly.`;
-      form.reset();
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = originalText;
+    const formData = new FormData(form);
 
-      setTimeout(() => {
-        statusBox.style.display = 'none';
-        statusBox.className = 'form-status';
-      }, 5000);
-    }, 700);
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(formData).toString()
+    })
+      .then((res) => {
+        if (res.ok) {
+          statusBox.className = 'form-status success';
+          statusBox.textContent = `Thank you, ${name}! Your message has been sent successfully. I will get back to you at ${email} shortly.`;
+          form.reset();
+        } else {
+          statusBox.className = 'form-status error';
+          statusBox.textContent = 'Submission error. Please email directly at limonislamborno@gmail.com.';
+        }
+      })
+      .catch(() => {
+        statusBox.className = 'form-status error';
+        statusBox.textContent = 'Network error. Please email directly at limonislamborno@gmail.com.';
+      })
+      .finally(() => {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+        setTimeout(() => {
+          statusBox.style.display = 'none';
+          statusBox.className = 'form-status';
+        }, 6000);
+      });
   });
 }
 
