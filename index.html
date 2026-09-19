@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Developer Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f4f4f4;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: #333;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        nav a {
+            color: white;
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            display: block;
+            transition: background 0.3s;
+        }
+
+        nav a:hover {
+            background: #667eea;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            margin: 3rem 0;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        section h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.3s;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .skill-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .skill-card ul {
+            list-style: none;
+        }
+
+        .skill-card li {
+            padding: 0.3rem 0;
+            color: #555;
+        }
+
+        .skill-card li:before {
+            content: "▸ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #e0e0e0;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .project-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+        }
+
+        .project-header h3 {
+            margin-bottom: 0.3rem;
+        }
+
+        .project-body {
+            padding: 1.5rem;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .tech-tag {
+            background: #667eea;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .contact-section {
+            text-align: center;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .contact-item {
+            font-size: 1.1rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .social-links a {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .social-links a:hover {
+            background: #764ba2;
+            transform: scale(1.1);
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            nav a {
+                text-align: center;
+                border-bottom: 1px solid #555;
+            }
+
+            section {
+                margin: 1.5rem 0;
+                padding: 1.5rem;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>John Developer</h1>
+        <p>Java Developer | Spring Boot Specialist | Backend Engineer</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- About Section -->
+        <section id="about">
+            <h2>About Me</h2>
+            <p style="font-size: 1.1rem; line-height: 1.8; color: #555;">
+                আমি একজন passionate Java developer যার Spring Boot এবং backend development এ 3+ বছর experience আছে। 
+                আমি scalable এবং maintainable সফটওয়্যার সলিউশন তৈরিতে বিশ্বাস করি।
+            </p>
+            <p style="font-size: 1.1rem; line-height: 1.8; color: #555; margin-top: 1rem;">
+                <strong>📍 Location:</strong> Dhaka, Bangladesh<br>
+                <strong>📧 Email:</strong> your.email@example.com<br>
+                <strong>📱 Phone:</strong> +880 170 0000 000
+            </p>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills">
+            <h2>Skills & Technologies</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3>☕ Java & Frameworks</h3>
+                    <ul>
+                        <li>Core Java</li>
+                        <li>Spring Boot</li>
+                        <li>Spring Data JPA</li>
+                        <li>Spring Security</li>
+                        <li>Hibernate</li>
+                    </ul>
+                </div>
+
+                <div class="skill-card">
+                    <h3>💾 Databases</h3>
+                    <ul>
+                        <li>MySQL</li>
+                        <li>PostgreSQL</li>
+                        <li>MongoDB</li>
+                        <li>Redis</li>
+                    </ul>
+                </div>
+
+                <div class="skill-card">
+                    <h3>🛠️ Tools & DevOps</h3>
+                    <ul>
+                        <li>Maven / Gradle</li>
+                        <li>Git / GitHub</li>
+                        <li>Docker</li>
+                        <li>Jenkins</li>
+                        <li>AWS</li>
+                    </ul>
+                </div>
+
+                <div class="skill-card">
+                    <h3>🔌 Architecture</h3>
+                    <ul>
+                        <li>REST APIs</li>
+                        <li>Microservices</li>
+                        <li>Message Queues</li>
+                        <li>Clean Code</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects">
+            <h2>Featured Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>E-Commerce Platform</h3>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Demo Project</p>
+                    </div>
+                    <div class="project-body">
+                        <p>Spring Boot দিয়ে তৈরি একটি full-fledged e-commerce platform যেখানে product management, shopping cart এবং payment integration আছে।</p>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Spring Boot</span>
+                            <span class="tech-tag">MySQL</span>
+                            <span class="tech-tag">JWT Auth</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Task Management API</h3>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Demo Project</p>
+                    </div>
+                    <div class="project-body">
+                        <p>RESTful API যা multiple users এর জন্য task management করে। Role-based access control সহ secure implementation।</p>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Spring Boot</span>
+                            <span class="tech-tag">PostgreSQL</span>
+                            <span class="tech-tag">Docker</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Microservices System</h3>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Demo Project</p>
+                    </div>
+                    <div class="project-body">
+                        <p>Multiple microservices architecture যেখানে service discovery, load balancing এবং inter-service communication implement করা আছে।</p>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Spring Cloud</span>
+                            <span class="tech-tag">Eureka</span>
+                            <span class="tech-tag">AWS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section">
+            <h2>Get In Touch</h2>
+            <p style="font-size: 1.1rem; color: #666; margin: 1.5rem 0;">
+                নতুন opportunities এবং interesting projects এর জন্য সবসময় open থাকি। Contact করুন!
+            </p>
+
+            <div class="contact-info">
+                <div class="contact-item">
+                    <strong>📧 Email:</strong><br>
+                    your.email@example.com
+                </div>
+                <div class="contact-item">
+                    <strong>📱 Phone:</strong><br>
+                    +880 170 0000 000
+                </div>
+                <div class="contact-item">
+                    <strong>📍 Location:</strong><br>
+                    Dhaka, Bangladesh
+                </div>
+            </div>
+
+            <div class="social-links">
+                <a href="https://github.com" title="GitHub" target="_blank">💻</a>
+                <a href="https://linkedin.com" title="LinkedIn" target="_blank">💼</a>
+                <a href="https://twitter.com" title="Twitter" target="_blank">🐦</a>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Java Developer Portfolio. Built with ❤️</p>
+    </footer>
+</body>
+</html>
