@@ -1,418 +1,911 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Java Developer Portfolio</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: #f4f4f4;
-        }
-
-        header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 3rem 0;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        header h1 {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-        }
-
-        header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-
-        nav {
-            background: #333;
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        nav a {
-            color: white;
-            padding: 0.8rem 1.5rem;
-            text-decoration: none;
-            display: block;
-            transition: background 0.3s;
-        }
-
-        nav a:hover {
-            background: #667eea;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        section {
-            margin: 3rem 0;
-            padding: 2rem;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        section h2 {
-            color: #667eea;
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 0.5rem;
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .skill-card {
-            background: #f8f9fa;
-            padding: 1.5rem;
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
-            transition: transform 0.3s;
-        }
-
-        .skill-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
-        }
-
-        .skill-card h3 {
-            color: #667eea;
-            margin-bottom: 1rem;
-        }
-
-        .skill-card ul {
-            list-style: none;
-        }
-
-        .skill-card li {
-            padding: 0.3rem 0;
-            color: #555;
-        }
-
-        .skill-card li:before {
-            content: "▸ ";
-            color: #667eea;
-            font-weight: bold;
-            margin-right: 0.5rem;
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .project-card {
-            background: #f8f9fa;
-            border-radius: 8px;
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: 1px solid #e0e0e0;
-        }
-
-        .project-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
-        }
-
-        .project-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 1.5rem;
-        }
-
-        .project-header h3 {
-            margin-bottom: 0.3rem;
-        }
-
-        .project-body {
-            padding: 1.5rem;
-        }
-
-        .tech-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin: 1rem 0;
-        }
-
-        .tech-tag {
-            background: #667eea;
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-        }
-
-        .contact-section {
-            text-align: center;
-        }
-
-        .contact-info {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            margin: 2rem 0;
-        }
-
-        .contact-item {
-            font-size: 1.1rem;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .social-links a {
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #667eea;
-            color: white;
-            border-radius: 50%;
-            text-decoration: none;
-            font-size: 1.5rem;
-            transition: background 0.3s, transform 0.3s;
-        }
-
-        .social-links a:hover {
-            background: #764ba2;
-            transform: scale(1.1);
-        }
-
-        footer {
-            background: #333;
-            color: white;
-            text-align: center;
-            padding: 2rem 0;
-            margin-top: 3rem;
-        }
-
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 2rem;
-            }
-
-            nav ul {
-                flex-direction: column;
-            }
-
-            nav a {
-                text-align: center;
-                border-bottom: 1px solid #555;
-            }
-
-            section {
-                margin: 1.5rem 0;
-                padding: 1.5rem;
-            }
-
-            .contact-info {
-                flex-direction: column;
-                gap: 1rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Professional Portfolio of a Senior Java & Spring Boot Developer specializing in Microservices, Distributed Systems, Cloud Architecture, and Scalable REST APIs.">
+  <meta name="keywords" content="Java Developer, Spring Boot, Microservices, REST API, Spring Data JPA, PostgreSQL, Docker, Kafka, Backend Engineer">
+  <meta name="author" content="Java Backend Developer">
+  <title>Senior Java Developer | Spring Boot & Microservices Portfolio</title>
+  
+  <!-- Local Stylesheet (No External Dependencies) -->
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header>
-        <h1>John Developer</h1>
-        <p>Java Developer | Spring Boot Specialist | Backend Engineer</p>
-    </header>
 
-    <nav>
-        <ul>
-            <li><a href="#about">About</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
+  <!-- Dynamic Background Canvas & Ambient Mesh -->
+  <canvas id="bg-canvas"></canvas>
+  <div class="ambient-glow" style="top: 15%; left: -10%;"></div>
+  <div class="ambient-glow" style="bottom: 20%; right: -10%; background: radial-gradient(circle, rgba(6, 182, 212, 0.1) 0%, rgba(0,0,0,0) 70%);"></div>
+
+  <!-- ==========================================================================
+       Navigation Bar
+       ========================================================================== -->
+  <header>
+    <nav class="navbar" aria-label="Main Navigation">
+      <div class="container nav-container">
+        <a href="#hero" class="brand-logo" aria-label="Home">
+          <div class="brand-icon">&lt;J/&gt;</div>
+          <span>Java<span class="gradient-text">Craft</span></span>
+        </a>
+
+        <button class="mobile-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+        <ul class="nav-links">
+          <li><a href="#about" class="nav-item">About</a></li>
+          <li><a href="#skills" class="nav-item">Skills</a></li>
+          <li><a href="#projects" class="nav-item">Projects</a></li>
+          <li><a href="#architecture" class="nav-item">Architecture</a></li>
+          <li><a href="#contact" class="nav-item">Contact</a></li>
+          <li class="nav-cta">
+            <a href="#contact" class="btn btn-primary btn-sm">Hire Me</a>
+          </li>
         </ul>
+      </div>
     </nav>
+  </header>
 
-    <div class="container">
-        <!-- About Section -->
-        <section id="about">
-            <h2>About Me</h2>
-            <p style="font-size: 1.1rem; line-height: 1.8; color: #555;">
-                আমি একজন passionate Java developer যার Spring Boot এবং backend development এ 3+ বছর experience আছে। 
-                আমি scalable এবং maintainable সফটওয়্যার সলিউশন তৈরিতে বিশ্বাস করি।
-            </p>
-            <p style="font-size: 1.1rem; line-height: 1.8; color: #555; margin-top: 1rem;">
-                <strong>📍 Location:</strong> Dhaka, Bangladesh<br>
-                <strong>📧 Email:</strong> your.email@example.com<br>
-                <strong>📱 Phone:</strong> +880 170 0000 000
-            </p>
-        </section>
-
-        <!-- Skills Section -->
-        <section id="skills">
-            <h2>Skills & Technologies</h2>
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <h3>☕ Java & Frameworks</h3>
-                    <ul>
-                        <li>Core Java</li>
-                        <li>Spring Boot</li>
-                        <li>Spring Data JPA</li>
-                        <li>Spring Security</li>
-                        <li>Hibernate</li>
-                    </ul>
-                </div>
-
-                <div class="skill-card">
-                    <h3>💾 Databases</h3>
-                    <ul>
-                        <li>MySQL</li>
-                        <li>PostgreSQL</li>
-                        <li>MongoDB</li>
-                        <li>Redis</li>
-                    </ul>
-                </div>
-
-                <div class="skill-card">
-                    <h3>🛠️ Tools & DevOps</h3>
-                    <ul>
-                        <li>Maven / Gradle</li>
-                        <li>Git / GitHub</li>
-                        <li>Docker</li>
-                        <li>Jenkins</li>
-                        <li>AWS</li>
-                    </ul>
-                </div>
-
-                <div class="skill-card">
-                    <h3>🔌 Architecture</h3>
-                    <ul>
-                        <li>REST APIs</li>
-                        <li>Microservices</li>
-                        <li>Message Queues</li>
-                        <li>Clean Code</li>
-                    </ul>
-                </div>
+  <main>
+    <!-- ==========================================================================
+         Hero Section
+         ========================================================================== -->
+    <section id="hero" class="hero-section">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-content">
+            <div class="hero-badge-container">
+              <span class="status-dot"></span>
+              <span class="hero-badge-text">Available for Full-Time & Contract Roles</span>
             </div>
-        </section>
 
-        <!-- Projects Section -->
-        <section id="projects">
-            <h2>Featured Projects</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>E-Commerce Platform</h3>
-                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Demo Project</p>
-                    </div>
-                    <div class="project-body">
-                        <p>Spring Boot দিয়ে তৈরি একটি full-fledged e-commerce platform যেখানে product management, shopping cart এবং payment integration আছে।</p>
-                        <div class="tech-tags">
-                            <span class="tech-tag">Spring Boot</span>
-                            <span class="tech-tag">MySQL</span>
-                            <span class="tech-tag">JWT Auth</span>
-                        </div>
-                    </div>
-                </div>
+            <h1 class="hero-title">
+              Crafting Resilient <br>
+              <span class="gradient-text">Backend Systems</span>
+            </h1>
 
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>Task Management API</h3>
-                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Demo Project</p>
-                    </div>
-                    <div class="project-body">
-                        <p>RESTful API যা multiple users এর জন্য task management করে। Role-based access control সহ secure implementation।</p>
-                        <div class="tech-tags">
-                            <span class="tech-tag">Spring Boot</span>
-                            <span class="tech-tag">PostgreSQL</span>
-                            <span class="tech-tag">Docker</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>Microservices System</h3>
-                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Demo Project</p>
-                    </div>
-                    <div class="project-body">
-                        <p>Multiple microservices architecture যেখানে service discovery, load balancing এবং inter-service communication implement করা আছে।</p>
-                        <div class="tech-tags">
-                            <span class="tech-tag">Spring Cloud</span>
-                            <span class="tech-tag">Eureka</span>
-                            <span class="tech-tag">AWS</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="hero-role">
+              <span>Specializing as </span>
+              <span class="hero-typing">Java Developer</span>
             </div>
-        </section>
 
-        <!-- Contact Section -->
-        <section id="contact" class="contact-section">
-            <h2>Get In Touch</h2>
-            <p style="font-size: 1.1rem; color: #666; margin: 1.5rem 0;">
-                নতুন opportunities এবং interesting projects এর জন্য সবসময় open থাকি। Contact করুন!
+            <p class="hero-description">
+              Senior Java Software Engineer with expertise in architecting high-throughput microservices, 
+              scalable RESTful APIs, event-driven pipelines, and cloud-native backends with Spring Boot & Docker.
             </p>
 
-            <div class="contact-info">
-                <div class="contact-item">
-                    <strong>📧 Email:</strong><br>
-                    your.email@example.com
-                </div>
-                <div class="contact-item">
-                    <strong>📱 Phone:</strong><br>
-                    +880 170 0000 000
-                </div>
-                <div class="contact-item">
-                    <strong>📍 Location:</strong><br>
-                    Dhaka, Bangladesh
-                </div>
+            <div class="hero-actions">
+              <a href="#projects" class="btn btn-primary">
+                <span>Explore Projects</span>
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+              <a href="#contact" class="btn btn-secondary">
+                <span>Get In Touch</span>
+              </a>
             </div>
 
-            <div class="social-links">
-                <a href="https://github.com" title="GitHub" target="_blank">💻</a>
-                <a href="https://linkedin.com" title="LinkedIn" target="_blank">💼</a>
-                <a href="https://twitter.com" title="Twitter" target="_blank">🐦</a>
+            <div class="tech-ticker">
+              <div class="tech-ticker-title">Core Ecosystem Focus</div>
+              <div class="tech-ticker-pills">
+                <span class="tech-pill">Java 17/21</span>
+                <span class="tech-pill">Spring Boot 3</span>
+                <span class="tech-pill">Microservices</span>
+                <span class="tech-pill">Apache Kafka</span>
+                <span class="tech-pill">PostgreSQL</span>
+                <span class="tech-pill">Docker & K8s</span>
+              </div>
             </div>
-        </section>
+          </div>
+
+          <!-- Hero Architecture Code Mockup -->
+          <div class="hero-code-wrapper">
+            <div class="code-window">
+              <div class="code-window-header">
+                <div class="window-controls">
+                  <span class="window-dot dot-red"></span>
+                  <span class="window-dot dot-yellow"></span>
+                  <span class="window-dot dot-green"></span>
+                </div>
+                <span class="window-tab">PaymentProcessingService.java</span>
+              </div>
+              <pre class="code-body"><code><span class="anno">@RestController</span>
+<span class="anno">@RequestMapping</span>(<span class="str">"/api/v1/payments"</span>)
+<span class="anno">@RequiredArgsConstructor</span>
+<span class="kw">public class</span> <span class="type">PaymentController</span> {
+
+    <span class="kw">private final</span> <span class="type">PaymentService</span> paymentService;
+    <span class="kw">private final</span> <span class="type">KafkaTemplate</span>&lt;<span class="type">String</span>, <span class="type">PaymentEvent</span>&gt; kafka;
+
+    <span class="anno">@PostMapping</span>(<span class="str">"/process"</span>)
+    <span class="anno">@Transactional</span>(isolation = <span class="type">Isolation</span>.SERIALIZABLE)
+    <span class="kw">public</span> <span class="type">ResponseEntity</span>&lt;<span class="type">PaymentResponse</span>&gt; <span class="method">execute</span>(
+            <span class="anno">@Valid</span> <span class="anno">@RequestBody</span> <span class="type">PaymentRequest</span> req) {
+        
+        <span class="comment">// Idempotent Transaction Execution</span>
+        <span class="type">Payment</span> tx = paymentService.<span class="method">process</span>(req);
+        kafka.<span class="method">send</span>(<span class="str">"payment-events"</span>, tx.<span class="method">toEvent</span>());
+        
+        <span class="kw">return</span> <span class="type">ResponseEntity</span>.<span class="method">ok</span>(<span class="kw">new</span> <span class="type">PaymentResponse</span>(tx));
+    }
+}</code></pre>
+              <div class="code-floating-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+                <span>Spring Boot 3.x Native AOT</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         About Me Section
+         ========================================================================== -->
+    <section id="about" class="section">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-badge">Background & Philosophy</span>
+          <h2 class="section-title">Engineered for <span class="gradient-text">Performance & Reliability</span></h2>
+          <p class="section-subtitle">A deep passion for building fault-tolerant backend infrastructures that scale seamlessly.</p>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-text reveal">
+            <p>
+              I am a dedicated <strong>Java Backend Engineer</strong> with extensive experience designing and deploying 
+              robust enterprise systems. My focus centers on clean architecture, domain-driven design, and 
+              concurrency optimization.
+            </p>
+            <p>
+              Over the years, I have engineered mission-critical microservices handling tens of thousands of requests per second, 
+              integrated multi-database persistence pipelines with ACID guarantees, and automated continuous deployment workflows.
+            </p>
+
+            <div class="about-principles">
+              <div class="principle-item">
+                <span class="principle-check">✓</span>
+                <span><strong>Microservice Decoupling:</strong> Independent deployability and event-driven orchestration via Kafka.</span>
+              </div>
+              <div class="principle-item">
+                <span class="principle-check">✓</span>
+                <span><strong>Data Integrity & Caching:</strong> Multi-tiered persistence using PostgreSQL, Redis caching, and JPA indexing.</span>
+              </div>
+              <div class="principle-item">
+                <span class="principle-check">✓</span>
+                <span><strong>Clean Code & Testing:</strong> Test-Driven Development with JUnit 5, Mockito, and Testcontainers.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-highlights reveal">
+            <div class="highlight-box">
+              <div class="highlight-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+              </div>
+              <div class="highlight-number">5+ Years</div>
+              <div class="highlight-label">Enterprise Java Experience</div>
+            </div>
+
+            <div class="highlight-box">
+              <div class="highlight-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                  <line x1="8" y1="21" x2="16" y2="21"></line>
+                  <line x1="12" y1="17" x2="12" y2="21"></line>
+                </svg>
+              </div>
+              <div class="highlight-number">30+ APIs</div>
+              <div class="highlight-label">Production Endpoints Deployed</div>
+            </div>
+
+            <div class="highlight-box">
+              <div class="highlight-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                  <polyline points="2 17 12 22 22 17"></polyline>
+                  <polyline points="2 12 12 17 22 12"></polyline>
+                </svg>
+              </div>
+              <div class="highlight-number">99.9%</div>
+              <div class="highlight-label">System Availability Target</div>
+            </div>
+
+            <div class="highlight-box">
+              <div class="highlight-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 14 14"></polyline>
+                </svg>
+              </div>
+              <div class="highlight-number">&lt;30ms</div>
+              <div class="highlight-label">Average P95 Latency SLA</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         Skills Section
+         ========================================================================== -->
+    <section id="skills" class="section">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-badge">Technical Stack</span>
+          <h2 class="section-title">Specialized <span class="cyan-gradient-text">Skill Matrix</span></h2>
+          <p class="section-subtitle">Deep expertise across core Java frameworks, distributed databases, cloud tools, and architectural patterns.</p>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="skills-tabs reveal">
+          <button class="tab-btn active" data-filter="all">All Technologies</button>
+          <button class="tab-btn" data-filter="java">Java & Frameworks</button>
+          <button class="tab-btn" data-filter="database">Databases & Cache</button>
+          <button class="tab-btn" data-filter="devops">DevOps & Cloud</button>
+          <button class="tab-btn" data-filter="arch">Architecture & Messaging</button>
+        </div>
+
+        <!-- Skills Cards Grid -->
+        <div class="skills-grid">
+          <!-- Java 17/21 -->
+          <div class="skill-card reveal" data-category="java">
+            <div class="skill-card-header">
+              <div class="skill-icon-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                  <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+                  <line x1="6" y1="1" x2="6" y2="4"></line>
+                  <line x1="10" y1="1" x2="10" y2="4"></line>
+                  <line x1="14" y1="1" x2="14" y2="4"></line>
+                </svg>
+              </div>
+              <div class="skill-info">
+                <h3>Java (11 / 17 / 21)</h3>
+                <span class="skill-category-tag">Core Language</span>
+              </div>
+            </div>
+            <div class="skill-progress-bar">
+              <div class="skill-progress-fill" style="width: 95%;"></div>
+            </div>
+            <div class="skill-footer">
+              <span>Streams, Concurrency, JVM Tuning</span>
+              <span>95%</span>
+            </div>
+          </div>
+
+          <!-- Spring Boot -->
+          <div class="skill-card reveal" data-category="java">
+            <div class="skill-card-header">
+              <div class="skill-icon-wrap" style="color: var(--accent-emerald);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                </svg>
+              </div>
+              <div class="skill-info">
+                <h3>Spring Boot & Cloud</h3>
+                <span class="skill-category-tag">Framework Ecosystem</span>
+              </div>
+            </div>
+            <div class="skill-progress-bar">
+              <div class="skill-progress-fill" style="width: 95%;"></div>
+            </div>
+            <div class="skill-footer">
+              <span>Spring MVC, Security, WebFlux</span>
+              <span>95%</span>
+            </div>
+          </div>
+
+          <!-- Spring Data JPA / Hibernate -->
+          <div class="skill-card reveal" data-category="java">
+            <div class="skill-card-header">
+              <div class="skill-icon-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                  <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                  <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                </svg>
+              </div>
+              <div class="skill-info">
+                <h3>Spring Data JPA & Hibernate</h3>
+                <span class="skill-category-tag">ORM & Persistence</span>
+              </div>
+            </div>
+            <div class="skill-progress-bar">
+              <div class="skill-progress-fill" style="width: 90%;"></div>
+            </div>
+            <div class="skill-footer">
+              <span>Query Optimization, L2 Cache</span>
+              <span>90%</span>
+            </div>
+          </div>
+
+          <!-- PostgreSQL & MySQL -->
+          <div class="skill-card reveal" data-category="database">
+            <div class="skill-card-header">
+              <div class="skill-icon-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 7v10c0 2.21 3.58 4 8 4s8-1.79 8-4V7"></path>
+                  <ellipse cx="12" cy="7" rx="8" ry="3"></ellipse>
+                  <path d="M4 12c0 2.21 3.58 4 8 4s8-1.79 8-4"></path>
+                </svg>
+              </div>
+              <div class="skill-info">
+                <h3>PostgreSQL & MySQL</h3>
+                <span class="skill-category-tag">Relational Databases</span>
+              </div>
+            </div>
+            <div class="skill-progress-bar">
+              <div class="skill-progress-fill" style="width: 90%;"></div>
+            </div>
+            <div class="skill-footer">
+              <span>Indexing, Transactions, Schema Migration</span>
+              <span>90%</span>
+            </div>
+          </div>
+
+          <!-- MongoDB & NoSQL -->
+          <div class="skill-card reveal" data-category="database">
+            <div class="skill-card-header">
+              <div class="skill-icon-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2C8 6 6 10 6 14c0 3.3 2.7 6 6 6s6-2.7 6-6c0-4-2-8-6-12z"></path>
+                </svg>
+              </div>
+              <div class="skill-info">
+                <h3>MongoDB & Redis</h3>
+                <span class="skill-category-tag">NoSQL & In-Memory Cache</span>
+              </div>
+            </div>
+            <div class="skill-progress-bar">
+              <div class="skill-progress-fill" style="width: 85%;"></div>
+            </div>
+            <div class="skill-footer">
+              <span>Distributed Cache, Aggregations</span>
+              <span>85%</span>
+            </div>
+          </div>
+
+          <!-- Docker & Containerization -->
+          <div class="skill-card reveal" data-category="devops">
+            <div class="skill-card-header">
+              <div class="skill-icon-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 12.5a6.5 6.5 0 0 1-6.5 6.5H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h1.5"></path>
+                  <rect x="7" y="7" width="3" height="3"></rect>
+                  <rect x="11" y="7" width="3" height="3"></rect>
+                  <rect x="7" y="11" width="3" height="3"></rect>
+                  <rect x="11" y="11" width="3" height="3"></rect>
+                  <rect x="15" y="11" width="3" height="3"></rect>
+                </svg>
+              </div>
+              <div class="skill-info">
+                <h3>Docker & Kubernetes</h3>
+                <span class="skill-category-tag">Containerization</span>
+              </div>
+            </div>
+            <div class="skill-progress-bar">
+              <div class="skill-progress-fill" style="width: 88%;"></div>
+            </div>
+            <div class="skill-footer">
+              <span>Multi-Stage Builds, Compose, Pods</span>
+              <span>88%</span>
+            </div>
+          </div>
+
+          <!-- Maven & CI/CD -->
+          <div class="skill-card reveal" data-category="devops">
+            <div class="skill-card-header">
+              <div class="skill-icon-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+              </div>
+              <div class="skill-info">
+                <h3>Maven, Gradle & Git</h3>
+                <span class="skill-category-tag">Build & Version Control</span>
+              </div>
+            </div>
+            <div class="skill-progress-bar">
+              <div class="skill-progress-fill" style="width: 92%;"></div>
+            </div>
+            <div class="skill-footer">
+              <span>Dependency Management, GitHub Actions</span>
+              <span>92%</span>
+            </div>
+          </div>
+
+          <!-- Microservices & Kafka -->
+          <div class="skill-card reveal" data-category="arch">
+            <div class="skill-card-header">
+              <div class="skill-icon-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="6" cy="6" r="3"></circle>
+                  <circle cx="18" cy="6" r="3"></circle>
+                  <circle cx="6" cy="18" r="3"></circle>
+                  <circle cx="18" cy="18" r="3"></circle>
+                  <line x1="9" y1="6" x2="15" y2="6"></line>
+                  <line x1="6" y1="9" x2="6" y2="15"></line>
+                  <line x1="18" y1="9" x2="18" y2="15"></line>
+                  <line x1="9" y1="18" x2="15" y2="18"></line>
+                </svg>
+              </div>
+              <div class="skill-info">
+                <h3>Kafka & RESTful APIs</h3>
+                <span class="skill-category-tag">Messaging & Protocol</span>
+              </div>
+            </div>
+            <div class="skill-progress-bar">
+              <div class="skill-progress-fill" style="width: 90%;"></div>
+            </div>
+            <div class="skill-footer">
+              <span>Event-Driven, OpenAPI/Swagger, OAuth2</span>
+              <span>90%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         Projects Section
+         ========================================================================== -->
+    <section id="projects" class="section">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-badge">Case Studies</span>
+          <h2 class="section-title">Featured <span class="gradient-text">Backend Projects</span></h2>
+          <p class="section-subtitle">Real-world enterprise systems engineered for high availability, fault tolerance, and low latency.</p>
+        </div>
+
+        <!-- Project Filter Buttons -->
+        <div class="project-filters reveal">
+          <button class="filter-btn active" data-filter="all">All Projects</button>
+          <button class="filter-btn" data-filter="microservices">Microservices</button>
+          <button class="filter-btn" data-filter="cloud">Cloud & DevOps</button>
+          <button class="filter-btn" data-filter="apis">APIs & Reactive</button>
+        </div>
+
+        <div class="projects-grid">
+          <!-- Project 1 -->
+          <article class="project-card reveal" data-category="microservices apis">
+            <div class="project-visual">
+              <div class="project-grid-pattern"></div>
+              <span class="project-badge">Fintech / Banking</span>
+              <div class="project-architecture-mini">
+                <span class="arch-node">Client</span>
+                <span class="arch-arrow">➔</span>
+                <span class="arch-node">API Gateway</span>
+                <span class="arch-arrow">➔</span>
+                <span class="arch-node">Kafka / DB</span>
+              </div>
+            </div>
+            <div class="project-body">
+              <h3 class="project-title">High-Throughput Fintech Payment Gateway</h3>
+              <p class="project-desc">
+                Engineered an asynchronous, idempotent distributed payment processing engine handling high concurrency 
+                with zero lost transactions and automated failure recovery.
+              </p>
+              <ul class="project-highlights-list">
+                <li>Integrated Distributed Tracing with Spring Cloud Sleuth & Zipkin</li>
+                <li>Implemented Circuit Breakers & Rate Limiting via Resilience4j</li>
+                <li>Maintained ACID compliance using two-phase commit & Saga pattern</li>
+              </ul>
+              <div class="project-tags">
+                <span class="project-tag">Java 17</span>
+                <span class="project-tag">Spring Boot 3</span>
+                <span class="project-tag">Kafka</span>
+                <span class="project-tag">PostgreSQL</span>
+                <span class="project-tag">Redis</span>
+              </div>
+              <div class="project-links">
+                <button class="btn btn-secondary btn-sm view-project-details" data-project="fintech-microservices">View Architecture</button>
+                <a href="#contact" class="btn btn-primary btn-sm">Request Demo</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 2 -->
+          <article class="project-card reveal" data-category="microservices cloud">
+            <div class="project-visual">
+              <div class="project-grid-pattern"></div>
+              <span class="project-badge">E-Commerce / Enterprise</span>
+              <div class="project-architecture-mini">
+                <span class="arch-node">Spring Security</span>
+                <span class="arch-arrow">➔</span>
+                <span class="arch-node">Tenant DB</span>
+                <span class="arch-arrow">➔</span>
+                <span class="arch-node">Cache</span>
+              </div>
+            </div>
+            <div class="project-body">
+              <h3 class="project-title">Distributed Multi-Tenant E-Commerce Platform</h3>
+              <p class="project-desc">
+                Architected a multi-tenant backend with dynamic schema routing, JWT/OAuth2 role-based authorization, 
+                and high-speed catalog caching.
+              </p>
+              <ul class="project-highlights-list">
+                <li>Dynamic multi-tenant schema isolation using Spring Data JPA</li>
+                <li>Sub-second product search queries via Elasticsearch integration</li>
+                <li>RabbitMQ messaging for order fulfillment notifications</li>
+              </ul>
+              <div class="project-tags">
+                <span class="project-tag">Java 21</span>
+                <span class="project-tag">Spring Security</span>
+                <span class="project-tag">MySQL</span>
+                <span class="project-tag">Elasticsearch</span>
+                <span class="project-tag">RabbitMQ</span>
+              </div>
+              <div class="project-links">
+                <button class="btn btn-secondary btn-sm view-project-details" data-project="ecommerce-backend">View Architecture</button>
+                <a href="#contact" class="btn btn-primary btn-sm">Request Demo</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 3 -->
+          <article class="project-card reveal" data-category="apis cloud">
+            <div class="project-visual">
+              <div class="project-grid-pattern"></div>
+              <span class="project-badge">IoT / Streaming</span>
+              <div class="project-architecture-mini">
+                <span class="arch-node">WebFlux</span>
+                <span class="arch-arrow">➔</span>
+                <span class="arch-node">Kafka Stream</span>
+                <span class="arch-arrow">➔</span>
+                <span class="arch-node">MongoDB</span>
+              </div>
+            </div>
+            <div class="project-body">
+              <h3 class="project-title">Real-Time IoT Telemetry Ingestion Hub</h3>
+              <p class="project-desc">
+                High-volume reactive pipeline built on Spring WebFlux to continuously stream, parse, and analyze millions 
+                of device metrics per minute with zero backpressure delays.
+              </p>
+              <ul class="project-highlights-list">
+                <li>Reactive non-blocking I/O handling 100k+ concurrent connections</li>
+                <li>Time-series aggregation stored in partitioned MongoDB clusters</li>
+                <li>Live metric exports to Prometheus and Grafana dashboards</li>
+              </ul>
+              <div class="project-tags">
+                <span class="project-tag">Spring WebFlux</span>
+                <span class="project-tag">Apache Kafka</span>
+                <span class="project-tag">MongoDB</span>
+                <span class="project-tag">Docker</span>
+                <span class="project-tag">Prometheus</span>
+              </div>
+              <div class="project-links">
+                <button class="btn btn-secondary btn-sm view-project-details" data-project="iot-telemetry">View Architecture</button>
+                <a href="#contact" class="btn btn-primary btn-sm">Request Demo</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 4 -->
+          <article class="project-card reveal" data-category="cloud microservices">
+            <div class="project-visual">
+              <div class="project-grid-pattern"></div>
+              <span class="project-badge">DevOps / Cloud Native</span>
+              <div class="project-architecture-mini">
+                <span class="arch-node">Maven</span>
+                <span class="arch-arrow">➔</span>
+                <span class="arch-node">Docker Image</span>
+                <span class="arch-arrow">➔</span>
+                <span class="arch-node">Eureka Mesh</span>
+              </div>
+            </div>
+            <div class="project-body">
+              <h3 class="project-title">Automated CI/CD & Service Discovery Platform</h3>
+              <p class="project-desc">
+                Created an end-to-end containerized orchestration platform featuring Spring Cloud Eureka discovery, 
+                Spring Cloud Gateway routing, and automated GitHub Actions delivery.
+              </p>
+              <ul class="project-highlights-list">
+                <li>Automated Maven build verification & SonarQube quality checks</li>
+                <li>Optimized multi-stage Docker images under 120MB</li>
+                <li>Zero-downtime rolling deployments on Kubernetes clusters</li>
+              </ul>
+              <div class="project-tags">
+                <span class="project-tag">Spring Cloud Eureka</span>
+                <span class="project-tag">Docker</span>
+                <span class="project-tag">Maven</span>
+                <span class="project-tag">Kubernetes</span>
+                <span class="project-tag">CI/CD</span>
+              </div>
+              <div class="project-links">
+                <button class="btn btn-secondary btn-sm view-project-details" data-project="cloud-devops">View Architecture</button>
+                <a href="#contact" class="btn btn-primary btn-sm">Request Demo</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         System Architecture Highlight Section
+         ========================================================================== -->
+    <section id="architecture" class="section">
+      <div class="container">
+        <div class="arch-showcase reveal">
+          <div class="arch-showcase-grid">
+            <div class="arch-spec-left">
+              <span class="section-badge">System Design Standards</span>
+              <h3 style="font-size: 1.8rem; margin-bottom: 1.25rem;">Building for <span class="gradient-text">Enterprise Scale</span></h3>
+              
+              <div class="arch-spec-item">
+                <div class="arch-spec-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                  </svg>
+                </div>
+                <div class="arch-spec-info">
+                  <h4>Security & Auth Standards</h4>
+                  <p>OAuth2 / OpenID Connect, stateless JWT verification, encrypted secret management, and OWASP Top 10 mitigation.</p>
+                </div>
+              </div>
+
+              <div class="arch-spec-item">
+                <div class="arch-spec-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                  </svg>
+                </div>
+                <div class="arch-spec-info">
+                  <h4>Observability & Health Checks</h4>
+                  <p>Spring Boot Actuator health endpoints, Micrometer metrics, structured JSON logging, and distributed correlation IDs.</p>
+                </div>
+              </div>
+
+              <div class="arch-spec-item">
+                <div class="arch-spec-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                    <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                    <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                    <line x1="6" y1="18" x2="6.01" y2="18"></line>
+                  </svg>
+                </div>
+                <div class="arch-spec-info">
+                  <h4>Persistence & Database Tuning</h4>
+                  <p>Connection pooling with HikariCP, composite B-Tree indexes, query execution plan analysis, and database migrations via Flyway/Liquibase.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="arch-diagram-box">
+              <div class="diagram-layer">
+                <div class="diagram-layer-title">Client Layer</div>
+                <div class="diagram-nodes-row">
+                  <span class="diagram-node">Web Client</span>
+                  <span class="diagram-node">Mobile Apps</span>
+                  <span class="diagram-node">Third-Party APIs</span>
+                </div>
+              </div>
+
+              <div class="diagram-layer">
+                <div class="diagram-layer-title">API Gateway & Edge (Spring Cloud Gateway)</div>
+                <div class="diagram-nodes-row">
+                  <span class="diagram-node">Rate Limiter</span>
+                  <span class="diagram-node">JWT Validation</span>
+                  <span class="diagram-node">Load Balancer</span>
+                </div>
+              </div>
+
+              <div class="diagram-layer">
+                <div class="diagram-layer-title">Core Microservices (Spring Boot)</div>
+                <div class="diagram-nodes-row">
+                  <span class="diagram-node">Auth Service</span>
+                  <span class="diagram-node">Payment Service</span>
+                  <span class="diagram-node">Order Service</span>
+                </div>
+              </div>
+
+              <div class="diagram-layer">
+                <div class="diagram-layer-title">Event Broker & Storage Layer</div>
+                <div class="diagram-nodes-row">
+                  <span class="diagram-node">Kafka Broker</span>
+                  <span class="diagram-node">Redis Cluster</span>
+                  <span class="diagram-node">PostgreSQL Master/Replica</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         Contact Section
+         ========================================================================== -->
+    <section id="contact" class="section">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-badge">Get In Touch</span>
+          <h2 class="section-title">Let's Build Something <span class="gradient-text">Exceptional</span></h2>
+          <p class="section-subtitle">Have a project in mind, a job opportunity, or want to discuss backend architecture? Send a message below.</p>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-info-card reveal">
+            <div>
+              <h3 style="font-size: 1.5rem; margin-bottom: 0.75rem;">Contact Information</h3>
+              <p>Feel free to reach out via email, phone, or connect with me on professional networks.</p>
+
+              <div class="contact-meta-list">
+                <div class="contact-item">
+                  <div class="contact-icon-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                      <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="contact-label">Email</div>
+                    <div class="contact-value"><a href="mailto:developer@example.com">developer@example.com</a></div>
+                  </div>
+                </div>
+
+                <div class="contact-item">
+                  <div class="contact-icon-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="contact-label">Phone</div>
+                    <div class="contact-value"><a href="tel:+1234567890">+1 (555) 019-2834</a></div>
+                  </div>
+                </div>
+
+                <div class="contact-item">
+                  <div class="contact-icon-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                      <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="contact-label">Location</div>
+                    <div class="contact-value">San Francisco, CA / Remote</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="contact-label" style="margin-bottom: 0.75rem;">Connect Socially</div>
+              <div class="social-links">
+                <!-- GitHub -->
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="GitHub Profile">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                  </svg>
+                </a>
+                <!-- LinkedIn -->
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn Profile">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                  </svg>
+                </a>
+                <!-- Twitter / X -->
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Twitter Profile">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Contact Form -->
+          <div class="contact-form-card reveal">
+            <form id="portfolio-contact-form" novalidate>
+              <div class="form-group">
+                <label for="sender-name" class="form-label">Full Name *</label>
+                <input type="text" id="sender-name" class="form-control" placeholder="e.g. Alex Morgan" required>
+              </div>
+
+              <div class="form-group">
+                <label for="sender-email" class="form-label">Email Address *</label>
+                <input type="email" id="sender-email" class="form-control" placeholder="alex@company.com" required>
+              </div>
+
+              <div class="form-group">
+                <label for="sender-subject" class="form-label">Subject</label>
+                <input type="text" id="sender-subject" class="form-control" placeholder="Project Inquiry / Job Opportunity">
+              </div>
+
+              <div class="form-group">
+                <label for="sender-message" class="form-label">Message *</label>
+                <textarea id="sender-message" class="form-control" placeholder="Tell me about your project, timeline, or engineering team..." required></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width: 100%;">
+                <span>Send Message</span>
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+              </button>
+
+              <div id="form-status-msg" class="form-status"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       Project Details Modal
+       ========================================================================== -->
+  <div id="project-modal" class="modal-overlay" aria-hidden="true" role="dialog">
+    <div class="modal-card">
+      <button id="modal-close" class="modal-close-btn" aria-label="Close modal">✕</button>
+      <h3 id="modal-title" style="font-size: 1.4rem; margin-bottom: 0.75rem;">Project Architecture Details</h3>
+      <p id="modal-desc" style="margin-bottom: 1.25rem; font-size: 0.95rem; line-height: 1.6;"></p>
+      
+      <div style="margin-bottom: 1rem;">
+        <h4 style="font-size: 0.85rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem;">Tech Stack & Integrations</h4>
+        <div id="modal-tech" class="project-tags"></div>
+      </div>
+
+      <div style="background: rgba(255,255,255,0.03); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+        <h4 style="font-size: 0.85rem; text-transform: uppercase; color: var(--accent-emerald); margin-bottom: 0.35rem;">Benchmark & Scalability SLA</h4>
+        <p id="modal-metrics" style="font-size: 0.85rem; color: var(--text-primary); font-family: var(--font-mono);"></p>
+      </div>
     </div>
+  </div>
 
-    <footer>
-        <p>&copy; 2024 Java Developer Portfolio. Built with ❤️</p>
-    </footer>
+  <!-- ==========================================================================
+       Footer
+       ========================================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#hero" class="brand-logo">
+            <div class="brand-icon">&lt;J/&gt;</div>
+            <span>Java<span class="gradient-text">Craft</span></span>
+          </a>
+          <p>Architecting robust, scalable, and high-performance Java enterprise systems.</p>
+        </div>
+
+        <ul class="footer-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#architecture">Architecture</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <button id="back-to-top" class="back-to-top-btn" aria-label="Back to top">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="18 15 12 9 6 15"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 Java Backend Engineer. All rights reserved.</div>
+        <div>Built with Clean Vanilla Code • Deployment Ready</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Local Script (No External Dependencies) -->
+  <script src="js/script.js"></script>
 </body>
 </html>
